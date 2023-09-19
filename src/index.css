@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+.login {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.9px);
+  -webkit-backdrop-filter: blur(0.9px);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+}
+
+.loginBack {
+  /* background: url('https://images.unsplash.com/photo-1494861895304-fb272971c078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80');
+   background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat; */
+}
+
+input {
+  outline: none;
+  background: transparent;
+}
+
+.linear {
+  background-image: linear-gradient(
+    to right bottom,
+    #392724,
+    #644d47,
+    #93766c,
+    #c4a393,
+    #f6d2bc
+  );
+  transition: all 2000ms linear;
+}
+.linear:hover {
+  background-image: linear-gradient(
+    to left top,
+    #392724,
+    #644d47,
+    #93766c,
+    #c4a393,
+    #f6d2bc
+  );
+}
+.fillForm {
+  position: relative;
+  list-style: none;
+  left: 0;
+  animation: move 1000ms ease-in;
+}
+.fillForm::before {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 100%;
+  background-color: #f6d2bc;
+  left: 0;
+  top: 0;
+  animation: move2 1000ms ease-in;
+  box-shadow: 2px 0 1px 1px rgba(230, 230, 230, 0.3);
+}
+
+@keyframes move {
+  from {
+    left: -120%;
+  }
+  to {
+    left: 0;
+  }
+}
+
+@keyframes move2 {
+  0% {
+    left: 120%;
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 1;
+  }
+  100% {
+    left: 0;
+  }
+}
+.gradient-text {
+  background-image: linear-gradient(
+    to left top,
+    #392724,
+    #644d47,
+    #93766c,
+    #c4a393,
+    #f6d2bc
+  );
+  -webkit-background-clip: text;
+  text-shadow: 1px 1px 1px #392724, 2px 2px 2px #644d47, 3px 3px 3px #93766c,
+    1px 1px 1px #c4a393, 2px 2px 2px #f6d2bc;
+
+  background-clip: text;
+  color: transparent; /* Make the text transparent to reveal the gradient background */
+  letter-spacing: 4px;
+}
