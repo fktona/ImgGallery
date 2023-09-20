@@ -25,7 +25,7 @@ export default function RootLayot() {
   return (
     <div className="relative">
     <Nav />
-        <DndProvider backend={TouchBackend} options={opts} >
+        <DndProvider backend={HTML5Backend} >
         <Homepage/>
                </DndProvider>
     

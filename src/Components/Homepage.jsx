@@ -4,19 +4,23 @@ import { searchResult } from "../assets/resource";
 import { useState ,useEffect } from 'react'
 import { DndProvider ,useDrag } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-
+import FetchedImg from "./FetchedImg";
+import { useDrop } from "react-dnd";
 
 export default function Homepage () {
-  
-  const [{ isDragging }, drag] = useDrag(() => ({
-  type: "image",
-  collect: (monitor) => ({
-    isDragging: !!monitor.isDragging()
-  })
-}))
+   const [newpos , setNewPos] = useState ([])
+  const [{isOver}, drop] = useDrop(() => ({
+    accept: "image",
+    drop:(item) => rearrange(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver()
+    })
+  }));
 
-console.log(isDragging)
-
+  const rearrange = (id) => {
+    imageDrop = imageDrop.filter((o) => id === o.id)
+    setNewPos( imageDrop)
+  }
 
   const [responseImage , setResponseImage] = useState([])
   const [searchTerm , setSearchTerm] = useState("")
@@ -64,12 +68,14 @@ console.log(isDragging)
     </div>
 
      
-     <ul  className={`grid grid-cols-2 md:grid-cols-3 min-w-[100px] gap-8 ${isDragging ? 'opacity-25':'opacity-100'} `}>
-     {responseImage.map((o)=> <li ref={drag}
-     
-     className=" mt-6 bg-red-300 text-[10px] font-semibold md:text-lg font-danc">  <img width={250} height={250} alt={o.tags} src={o.webformatURL} loading="lazy" className="h-[100%] w-[100%] object-fill " /><span>{(o.tags).toUpperCase()}</span></li>)}
-     </ul>
-
+     <ul ref={drop}  className={`grid  ${isOver && 'hidden'} grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+      min-w-[100px] gap-8  `}>
+     {responseImage.map((o)=> <FetchedImg  id={o.id} image={o.webformatURL} 
+           tags={o.tags}/>)}</ul>
+{/* <ul ref={drop}  className={`grid   grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+      min-w-[100px] gap-8  `}>
+     {newpos?.map((o)=> <FetchedImg  id={o.id} image={o.webformatURL} 
+           tags={o.tags}/>)}</ul> */}
      
     </div>
     
