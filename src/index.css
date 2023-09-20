@@ -112,3 +112,27 @@ background: #ffffff;
 box-shadow: inset 5px 5px 10px #d9d9d9,
             inset -5px -5px 10px #ffffff;
 }
+
+/* CSS */
+.undragged {
+  transform: scale(0.9); /* You can adjust the scale factor as needed */
+  transition: transform 0.3s ease; /* Add a smooth transition effect */
+}
+
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); /* Define your grid columns */
+  grid-auto-rows: auto; /* Specify the height of auto-generated rows */
+  grid-auto-flow: dense; /* Use dense to make items flow to the next row when width is full */
+  place-items: center;
+  justify-content:  center;
+  margin: 0 auto;
+}
+
+.grid-item {
+  /* Define styling for grid items */
+  border: 1px solid #ccc;
+  padding: 10px;
+}

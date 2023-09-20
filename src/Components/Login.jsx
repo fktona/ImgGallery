@@ -62,8 +62,7 @@ function Login() {
     } finally {
       setIsLoading(false);
       setEmptyField(false);
-      Navigate('/')
-      
+      Navigate("/");
     }
   };
 
