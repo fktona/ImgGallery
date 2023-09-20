@@ -43,16 +43,34 @@ export default function Homepage() {
   }));
 
   const rearrange = (id) => {
-    console.log(id);
-    const imageDrop = responseImage.filter((o) => id === o.id);
-    setNewPos((bord) => [...bord, imageDrop[0]]);
-    if (imageDrop) {
+    // Find the element with the matching id in responseImage
+    const foundElement = responseImage.find((o) => o.id === id);
+  
+    if (foundElement) {
+      // Remove the found element from responseImage
       setResponseImage((prev) => prev.filter((o) => o.id !== id));
+  
+      // Add the found element to bord
+      setNewPos((bord) => [...bord, foundElement]);
+    }
+  };
+  
+  
+  
+
+  
+  const rearrangeBack = (id) => {
+    const imageDrop = newpos.filter((o) => id === o.id);
+    setResponseImage((bord) => [...bord, imageDrop[0]]);
+    if (imageDrop) {
+      setNewPos((prev) => prev.filter((o) => o.id !== id));
     }
   };
 
   return (
     <div className="relative top-12 p-2">
+      <h1 className="header-text text-3xl font-bold mt-[3rem] font-mono m-6 flex items-center 
+      justify-center">EXPLORE THE BEAUTIFUL NATURE OF IMAGES</h1>
       <div className="relative p-2 flex flex-col justify-center gap-5">
         <input
           type="search"
@@ -68,24 +86,26 @@ export default function Homepage() {
           Search
         </button>
       </div>
-
-      <ul
-        className={`grid-container border-2 m-8 border-primary min-h-[80vh] p-4 w-[90vw] mx-auto`}
-      >
-        {responseImage.map((o) => (
+  <div className="flex relative items-start gap-2">      <ul ref={drop}
+        className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 w-[90vw] mx-auto`}
+      > {responseImage.map((o) => (
           <FetchedImg
             id={o.id}
             image={o.webformatURL}
             tags={o.tags}
+            likes={o.likes}
+            user={o.user}
             key={o.id}
           />
         ))}
       </ul>
 
-      <ul
+      {/* <ul
         ref={drop}
-        className={`grid border-2 m-8 border-primary min-h-[80vh] p-4 w-[90vw] mx-auto
-         grid-cols-2 md:grid-cols-3 lg:grid-cols-4 min-w-[100px] gap-8`}
+        className={`grid grid-cols-2 md:grid-3
+         lg:grid-cols-4
+          min-h-[80vh] p-4 w-[90vw] mx-auto`}
+        
       >
         {" "}
         {newpos.length > 0 ? (
@@ -99,13 +119,15 @@ export default function Homepage() {
           ))
         ) : (
           <h2
-            className="text-3xl place-items-center mx-auto text-gray-300/[0.5] absolute
-         text-center w-full font-mono font-bold"
+            className="text-md  m text-gray-300/[0.75] 
+         text-center  font-mono font-bold"
           >
             DRAG IMAGE HERE TO REARRANGE
           </h2>
         )}
-      </ul>
+      </ul>*/}
+      </div> 
+
     </div>
   );
 }

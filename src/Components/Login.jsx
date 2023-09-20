@@ -80,7 +80,7 @@ function Login() {
         className="absolute h-[100vh] object-fill z-[-1] w-[100vw] p-0"
       />
 
-      <div className="login max-w-[90%] flex flex-col  items-center p-4 w-full justify-center">
+      <div className="login max-w-[90%] lg:max-w-[60%] flex flex-col  items-center p-4 w-full justify-center">
         <h2 className="text-2xl  text-white font-bold mb-4">
           Login To Get Full Access
         </h2>

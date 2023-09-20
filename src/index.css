@@ -7,6 +7,20 @@
   padding: 0;
   margin: 0;
 }
+
+
+:root{
+  --linear: linear-gradient(
+    to right bottom,
+    #392724,
+    #644d47,
+    #93766c,
+    #c4a393,
+    #f6d2bc
+  );
+}
+
+
 .login {
   background: rgba(255, 255, 255, 0.18);
   border-radius: 16px;
@@ -91,7 +105,7 @@ input {
 }
 .gradient-text {
   background-image: linear-gradient(
-    to left top,
+    to right top,
     #392724,
     #644d47,
     #93766c,
@@ -105,7 +119,32 @@ input {
   background-clip: text;
   color: transparent; /* Make the text transparent to reveal the gradient background */
   letter-spacing: 4px;
+  
 }
+
+
+
+.header-text {
+  background-image: var(--linear);
+
+  -webkit-background-clip: text;
+
+  /* text-shadow: 1px 1px 1px #392724, 2px 2px 2px #644d47, 3px 3px 3px #93766c,
+    1px 1px 1px #c4a393, 2px 2px 2px #f6d2bc; */
+
+  background-clip: text;
+  color: transparent; /* Make the text transparent to reveal the gradient background */
+  letter-spacing: 4px;
+  transition: all 400ms linear;
+  
+
+  animation: bg 400ms linear;
+}
+
+.header-text:hover{
+  color: #392724;
+}
+
 .search {
   border-radius: 0px;
 background: #ffffff;

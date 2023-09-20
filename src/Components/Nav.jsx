@@ -14,7 +14,7 @@ export default function Nav() {
 
   return (
     <div
-      className={` bg-white flex z-[5] fixed top-0 w-full justify-between py-2 px-1 items-center shadow-lg `}
+      className={` bg-white flex z-[5] fixed top-0 w-full justify-between py-2 px-4 items-center shadow-lg `}
     >
       {confirm && authUser && (
         <div className="bg-white absolute top-10 z-[3] shadow-lg right-5 p-3 text-primary flex flex-col gap-2 items-center justify-center text-md ">
