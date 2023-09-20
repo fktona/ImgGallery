@@ -1,16 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState ,useEffect } from 'react'
+import { auth } from "./assets/firebase";
 import './App.css'
+import {UserContext} from './assets/UserContext'
 import RootLayot from "./RootLayot";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [authUser, setAuthUser] = useState(null);
+  
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, (user) => {
+      user ? setAuthUser(user) : null;
+    });
+
+    return () => {
+      listen();
+    };
+  }, []);
+  
+  console.log(authUser)
+  
+  const aboutToSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        setAuthUser(false);
+        console.log("signOut");
+      })
+      .catch((error) => {});
+  };
 
   return (
-<>
+<div>
+<UserContext.Provider value= {{authUser ,setAuthUser , aboutToSignOut}} >
       <RootLayot />
-</>
+    </UserContext.Provider >
+</div>
   )
 }
 

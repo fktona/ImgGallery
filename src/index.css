@@ -106,3 +106,9 @@ input {
   color: transparent; /* Make the text transparent to reveal the gradient background */
   letter-spacing: 4px;
 }
+.search {
+  border-radius: 0px;
+background: #ffffff;
+box-shadow: inset 5px 5px 10px #d9d9d9,
+            inset -5px -5px 10px #ffffff;
+}

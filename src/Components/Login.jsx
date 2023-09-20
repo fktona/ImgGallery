@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
-import { MdClose } from "react-icons/md";
+import React, { useState } from "react";
 import { auth } from "../assets/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 function Login() {
+  const Navigate = useNavigate();
   const [emptyField, setEmptyField] = useState(false);
   const [incorrectPassword, setIncorrectPassword] = useState(false);
   const [incorrectEmail, setIncorrectEmail] = useState(false);
@@ -61,14 +62,15 @@ function Login() {
     } finally {
       setIsLoading(false);
       setEmptyField(false);
-      console.log("done");
+      Navigate('/')
+      
     }
   };
 
   return (
     <div className="  h-[100vh] flex gap-3 flex-col items-center justify-center">
       <div className="absolute h-[100vh] object-fill  w-[100vw] p-0 bg-black/[0.33]"></div>
-      <h1 className="absolute z-[3] mx-auto top-[12rem] text-2xl  text-white font-danc font-bold gradient-text ">
+      <h1 className="relative z-[3] top-[-2rem] text-3xl  text-white font-danc font-bold gradient-text ">
         ViewVault
       </h1>
       <img
@@ -79,7 +81,7 @@ function Login() {
         className="absolute h-[100vh] object-fill z-[-1] w-[100vw] p-0"
       />
 
-      <div className="login w-[93%] flex flex-col  items-center p-4 w-full justify-center">
+      <div className="login max-w-[90%] flex flex-col  items-center p-4 w-full justify-center">
         <h2 className="text-2xl  text-white font-bold mb-4">
           Login To Get Full Access
         </h2>
