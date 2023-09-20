@@ -16,7 +16,7 @@ export default function FetchedImg({ image, tags, id }) {
   const imgClass = isDragging ? "opacity-50" : "";
 
   return (
-    <div className={`cursor-pointer ${imgClass}`}>
+    <div className={`cursor-pointer relative w-full${imgClass}`}>
       <li
         key={id}
         ref={(node) => {
@@ -31,7 +31,7 @@ export default function FetchedImg({ image, tags, id }) {
           alt={tags}
           src={image}
           loading="lazy"
-          className="h-[50%] w-[50%] object-fill"
+          className="h-[100%] w-[100%] object-fill"
         />
         <span>{tags}</span>
       </li>

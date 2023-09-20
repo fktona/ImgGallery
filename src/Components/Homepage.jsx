@@ -42,10 +42,12 @@ export default function Homepage() {
     }),
   }));
 
-  const rearrange = (id) => {
+  const rearrange =  (id) => {
     console.log(id);
-    const imageDrop = responseImage.filter((o) => id === o.id);
+    const imageDrop =  responseImage.filter((o) => id === o.id);
+    responseImage.length > 0 &&
     setNewPos((bord) => [...bord, imageDrop[0]]);
+    console.log(newpos)
     if (imageDrop) {
       setResponseImage((prev) => prev.filter((o) => o.id !== id));
     }
@@ -70,7 +72,7 @@ export default function Homepage() {
       </div>
 
       <ul
-        className={`grid-container border-2 m-8 border-primary min-h-[80vh] p-4 w-[90vw] mx-auto`}
+        className={`grid -container grid-cols-6 border-2  border-primary  p-4 w-[95vw] mx-auto`}
       >
         {responseImage.map((o) => (
           <FetchedImg
@@ -84,17 +86,17 @@ export default function Homepage() {
 
       <ul
         ref={drop}
-        className={`grid border-2 m-8 border-primary min-h-[80vh] p-4 w-[90vw] mx-auto
-         grid-cols-2 md:grid-cols-3 lg:grid-cols-4 min-w-[100px] gap-8`}
+        className={`grid border-2 m-8 border-primary min-h-[40vh] p-4 w-[90vw] mx-auto
+         grid-cols-2 md:grid-cols-3 lg:grid-cols-4 min-w-[100px] gap-2`}
       >
         {" "}
         {newpos.length > 0 ? (
           newpos?.map((o) => (
             <FetchedImg
-              id={o?.id}
-              image={o?.webformatURL}
-              tags={o?.tags}
-              key={o?.id}
+              id={o.id}
+              image={o.webformatURL}
+              tags={o.tags}
+              key={o.id}
             />
           ))
         ) : (
