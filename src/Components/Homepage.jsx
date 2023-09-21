@@ -124,7 +124,7 @@ useEffect(() => {
           Search
         </button>
       </div>
-   {loginMsg &&  <p className= " poplogin fixed inset-x-0 z-[20] text-white py-1 px-3 md:text-lg  text-md mx-auto w-fit bg-primary font-semibold m-8"> You Moved An Image </p>  }
+   {loginMsg &&  <p className= " poplogin fixed inset-x-0 z-[20] text-white py-1 px-3 md:text-lg  text-md mx-auto w-fit bg-primary font-semibold m-8"> Login In To Drag And Drop Images</p>  }
    
       {dragMsg && <p className= " poplogin fixed inset-x-0 z-[20] text-white py-1 px-3 md:text-lg  text-md mx-auto w-fit bg-primary font-semibold m-8"> You Moved An Image </p>  }
       
