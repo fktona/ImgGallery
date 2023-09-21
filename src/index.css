@@ -167,7 +167,7 @@ box-shadow: inset 5px 5px 10px #d9d9d9,
   grid-auto-flow: dense; /* Use dense to make items flow to the next row when width is full */
   place-items: center;
   justify-content:  center;
-  margin: 0 auto;
+
 }
 
 .grid-item {
