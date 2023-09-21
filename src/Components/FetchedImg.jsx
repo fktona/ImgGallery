@@ -13,8 +13,8 @@ export default function FetchedImg({ image, tags, id, likes, user , isLoading ,i
           // Skeleton Loading
           <>
             <SkeletonTheme baseColor="#202020" highlightColor="#444"  >
-            <Skeleton width={200} height={230}  className="relative    " />
-            <Skeleton width={200} height={70}  className="relative h-full " />
+            <Skeleton width={1700} height={230}  className="relative    " />
+            <Skeleton width={170} height={70}  className="relative h-full " />
            
             </SkeletonTheme >
           </>

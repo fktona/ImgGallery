@@ -5,6 +5,6 @@
   publish = "dist"          # Replace with your build output directory
 
 [[redirects]]
-  from = "/homepage*"
+  from = "/*"
   to = "/index.html"
   status = 200
