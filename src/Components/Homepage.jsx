@@ -5,7 +5,7 @@ import {
   closestCenter,
   KeyboardSensor,
 } from "@dnd-kit/core";
-import { SortableContext, useSortable } from "@dnd-kit/sortable";
+import { SortableContext, useSortable , verticalListSortingStrategy } from "@dnd-kit/sortable";
 import SortableImage from "./Sorting"
 import { UserContext } from "../assets/UserContext";
 import Skeleton from 'react-loading-skeleton'
@@ -150,7 +150,7 @@ useEffect(() => {
         
      
         <DndContext onDragEnd={ handleDragEnd} 
-        onDragStart= {handleDragStart}>
+        onDragStart={handleDragStart} collisionDectection={closestCenter} verticalListSortingStrategy={verticalListSortingStrategy}>
           <ul className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 w-full items-center mx-auto`}>
             {items.map((item) => (
               <SortableImage

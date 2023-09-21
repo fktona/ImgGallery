@@ -62,12 +62,13 @@ export default function SortableImage({ image, tags, id, likes, user ,isLoading 
 
   const isOverlapping = over && over.id !== id && isDragging;
 
-  const style = {
-  transform: isDragging ? "scale(1.1)" : transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : "",
+  const styles = {
+  transform: isDragging ? "scale(1.1)" : transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : CSS.Transform.toString(transform),
+// transform: CSS.Transform.toString(transform),
   transition: transition || (isDragging ? "all 0.8s" : ""),
   opacity: isOverlapping ? 0.9 : isDragging ? 0.7 : 1,
   width: isReducedWidth ? "50px" : "", // Adjust the width as needed
-  zIndex: isOverlapping ? -1 : 2,
+  zIndex: isOverlapping ? 20: 1,
 };
 
 
@@ -76,33 +77,33 @@ export default function SortableImage({ image, tags, id, likes, user ,isLoading 
       ref={setNodeRef}
       {...attributes}
       {...listeners}
-      style={style}
+      style={styles}
       onMouseEnter={() => setIsDraggingOver(true)}
       onMouseLeave={() => setIsDraggingOver(false)}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      {isDragging && (
-       <div classNames="absolute top-0 bg-primary text-white text-3xl z-[444]"> <popup message="Drag me!" isVisible={true} /></div>
-      )}
-      {isDraggingOver && isDragging && (
+
+      {isDraggingOver &&isDragging && (
         <div
           style={{
             position: "absolute",
-            zIndex: 1000,
-            transform: CSS.Transform.toString(transform),
+            zIndex: 100,
+           transform: CSS.Transform.toString(transform),
             pointerEvents: "none",
-            top: cursorPosition.y - 25,
-            left: cursorPosition.x - 25,
-          }}
+            top: cursorPosition.y - 30,
+            left: cursorPosition.x - 30,
+          }} 
         >
           <img
             src={image}
             alt={tags}
-            width={50}
-            height={50}
+            width={350}
+            height={300}
             style={{
-              opacity: isOverlapping ? 0.5 : 0.7,
+              opacity: isOverlapping ? 1 : 1,
+              position: 'relative',
+              zIndex:100000000,
             }}
           />
         </div>
