@@ -87,7 +87,7 @@ transform: CSS.Transform.toString(transform),
       {isDraggingOver &&isDragging && (
         <div
           style={{
-            position: "absolute",
+           // position: "",
             zIndex: 100,
            transform: CSS.Transform.toString(transform),
             pointerEvents: "none",
@@ -103,7 +103,7 @@ transform: CSS.Transform.toString(transform),
             style={{
               opacity: isOverlapping ? 1 : 1,
               position: 'relative',
-              zIndex:100000000,
+              zIndex:1000000000,
             }}
           />
         </div>
