@@ -120,7 +120,7 @@ useEffect(() => {
    {loginMsg && <p className= " poplogin text-white py-1 px-3 text-md mx-auto w-fit bg-secondary font-semibold m-8"> Login to drag and drop </p>  }
       <div className="flex relative items-start gap-2">
         
-     {responseImage.length > 0 ?
+     
         <DndContext onDragEnd={ handleDragEnd}>
           <ul className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 w-full items-center mx-auto`}>
             {items.map((item) => (
@@ -135,8 +135,12 @@ useEffect(() => {
               />
             ))}
           </ul>
-        </DndContext> :<p  className="text-white text-3xl mx-auto text-secondary">  No Results Found </p>}
-        </div>
+        </DndContext> 
+                </div>
+        
+        {responseImage.length > 0 && <p  className="text-white text-3xl mx-auto text-secondary">  No Results Found </p>}
+ 
+        
                <ul className="flex flex-wrap items-center justify-center gap-2">
        { responseImage && pages?.map((o => <li key={o} onClick = { () => setCurrentPage(o)} 
        className={`p-3 text-center
