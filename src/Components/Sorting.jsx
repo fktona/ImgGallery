@@ -63,9 +63,9 @@ export default function SortableImage({ image, tags, id, likes, user ,isLoading 
   const isOverlapping = over && over.id !== id && isDragging;
 
   const styles = {
-  //transform: isDragging ? "scale(1.1)" : transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : CSS.Transform.toString(transform),
-transform: CSS.Transform.toString(transform),
-  transition: transition || (isDragging ? "all 0.8s" : ""),
+  transform: isDragging ? "scale(1.1)" : transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : CSS.Transform.toString(transform),
+//transform: CSS.Transform.toString(transform),
+  transition: transition , // (isDragging ? "all 0.8s" : ""),
   opacity: isOverlapping ? 0.9 : isDragging ? 0.7 : 1,
   width: isReducedWidth ? "50px" : "", // Adjust the width as needed
   zIndex: isOverlapping ? 20: 1,
@@ -87,9 +87,10 @@ transform: CSS.Transform.toString(transform),
       {isDraggingOver &&isDragging && (
         <div
           style={{
-           // position: "",
+            position: "absolute",
             zIndex: 100,
            transform: CSS.Transform.toString(transform),
+           transition:transition,
             pointerEvents: "none",
             top: cursorPosition.y - 30,
             left: cursorPosition.x - 30,
@@ -102,8 +103,8 @@ transform: CSS.Transform.toString(transform),
             height={300}
             style={{
               opacity: isOverlapping ? 1 : 1,
-              position: 'aboslute',
-              zIndex:1000000000,
+              position: 'relative',
+              zIndex:100000000,
             }}
           />
         </div>
