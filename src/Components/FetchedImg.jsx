@@ -6,12 +6,12 @@ export default function FetchedImg({ image, tags, id , likes , user}) {
   
 
   return (
-    <div className={`cursor-pointer  relative `}>
+    <div className={`cursor-pointer flex flex-col  relative `}>
       <li
         key={id}
        
       
-        className="text-[10px] w-full relative font-semibold font-danc"
+        className="text-[10px] h-[100%] w-full relative font-semibold font-danc"
       >
         <img
           width={250}
@@ -19,7 +19,7 @@ export default function FetchedImg({ image, tags, id , likes , user}) {
           alt={tags}
           src={image}
           loading="lazy"
-          className="lg:h-[400px] w-full relative h-[250px] object-cover"
+          className="lg:h-[400px] w-full relative min-h-[250px] object-cover"
         />
         <span className="relative flex flex-col
          items-center justify-center text-[12px] gap-3
@@ -28,7 +28,7 @@ export default function FetchedImg({ image, tags, id , likes , user}) {
           
           <span>{tags}</span> 
           <span className="font-mono"> Created by: {user}</span> </span>
-          <span className=" flex items-center justify-start 
+          <span className=" flex absolute items-center justify-start 
            text-lg font-popi gap-2
          top-0 text-center text-white min-h-[15%]
            w-full px-4 py-2 z-[2]">{likes} < MdFavorite /></span>

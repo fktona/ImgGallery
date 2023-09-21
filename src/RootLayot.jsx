@@ -6,7 +6,6 @@ import Nav from "./Components/Nav";
 import { Outlet } from "react-router-dom";
 import { DndProvider, useDrag } from "react-dnd";
  import { DndContext  } from "react-dnd";
-import { SortableContext, arrayMove , verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 export default function RootLayot() {
   const [searched, setSearched] = useState("");
@@ -17,7 +16,7 @@ export default function RootLayot() {
     <div className="relative">
       <Nav />
     
-        <Homepage />
+      
         <Outlet />
     </div>
   );
