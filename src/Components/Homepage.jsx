@@ -85,6 +85,7 @@ useEffect(() => {
   }
     else{
       setLoginMsg(true)
+      setDragMsg(false)
       setTimeout(() => {
         setLoginMsg(false)
         }, [4000])
