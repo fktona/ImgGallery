@@ -4,8 +4,9 @@ export const resources = async (resourceName, queryParams = {}) => {
   const script = document.createElement("script");
 
   // Define the URL for the Pixabay API with the callback parameter
-  script.src = `https://pixabay.com/api/?key=${apiKey}&q=${queryParams.q}&callback=${callbackName}`;
+  script.src = `https://pixabay.com/api/?key=${apiKey}&q=${ new URLSearchParams(queryParams.q ,)}&callback=${callbackName}`;
 
+  
   // Create a Promise to handle the JSONP response
   return new Promise((resolve, reject) => {
     // Define the callback function to handle the JSONP response
@@ -41,10 +42,13 @@ export const resources = async (resourceName, queryParams = {}) => {
 //   }
 // };
 
-export const searchResult = async (queryParams = {}) => {
+export const searchResult = async (queryParams = {} ,) => {
   try {
     // Merge the provided queryParams with the "per_page" parameter set to 24
-    const updatedQueryParams = { ...queryParams, per_page: 24 };
+    const updatedQueryParams = { ...queryParams , 
+      per_page:24,
+      page: 5,
+    };
 
     const data = await resources("api", updatedQueryParams); // Use "api" as the resource name for Pixabay API
     return data;

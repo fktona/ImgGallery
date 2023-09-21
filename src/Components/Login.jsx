@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { auth } from "../assets/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import {ScaleLoader} from "react-spinners"
+import { UserContext } from "../assets/UserContext";
+
 function Login() {
+  const { authUser } = useContext(UserContext);
   const Navigate = useNavigate();
   const [emptyField, setEmptyField] = useState(false);
   const [incorrectPassword, setIncorrectPassword] = useState(false);
@@ -28,43 +32,46 @@ function Login() {
     (key) => !userSignIn[key]
   );
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+    const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    if (emptyFieldKey.length > 0) {
-      setEmptyField(true);
-      return;
+  if (emptyFieldKey.length > 0) {
+    setEmptyField(true);
+    return;
+  }
+
+  try {
+    setIsLoading(true);
+
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      userSignIn.email,
+      userSignIn.password
+    );
+
+    setEmptyField(false);
+    console.log(userCredential.user);
+
+    // Only navigate to the home page on successful sign-in
+    Navigate('/homepage');
+  } catch (error) {
+    if (error.code === "auth/wrong-password") {
+      console.log("Incorrect password");
+      setIncorrectPassword(true);
+    } else if (error.code === "auth/user-not-found") {
+      console.log("User not found");
+      setIncorrectEmail(true);
+      // Handle user not found condition here, e.g., show error message to the user
+    } else {
+      console.error("Error signing in:", error);
+      setSignInError(true);
     }
+  } finally {
+    setIsLoading(false);
+    setEmptyField(false);
+  }
+};
 
-    try {
-      setIsLoading(true);
-
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        userSignIn.email,
-        userSignIn.password
-      );
-
-      setEmptyField(false);
-      console.log(userCredential.user);
-    } catch (error) {
-      if (error.code === "auth/wrong-password") {
-        console.log("Incorrect password");
-        setIncorrectPassword(true);
-      } else if (error.code === "auth/user-not-found") {
-        console.log("User not found");
-        setIncorrectEmail(true);
-        // Handle user not found condition here, e.g., show error message to the user
-      } else {
-        console.error("Error signing in:", error);
-        setSignInError(true);
-      }
-    } finally {
-      setIsLoading(false);
-      setEmptyField(false);
-      Navigate("/");
-    }
-  };
 
   return (
     <div className="  h-[100vh] flex gap-3 flex-col items-center justify-center">
@@ -84,7 +91,7 @@ function Login() {
         <h2 className="text-2xl  text-white font-bold mb-4">
           Login To Get Full Access
         </h2>
-        {isLoading && <div className="lds-dual-ring"></div>}
+        {isLoading && <div className="absolute m-auto z-[22] w-[5rem]"><ScaleLoader color="#392724" /></div>}
 
         <ul className="overflow-hidden">
           {emptyFieldKey.length > 0 &&
@@ -157,10 +164,11 @@ function Login() {
       <p className="mx-auto/ z-[2] font-mono text-lg text-white mt-3 text-sm">
         {" "}
         Explore as a{" "}
-        <span className="relative m-2 p-1 bg-primary  text-white rounded  hover:bg-primary linear text-white">
+        <button onClick={() => Navigate('/homepage')}
+        className="relative m-2 p-1 bg-primary  text-white rounded  hover:bg-primary linear text-white">
           {" "}
           Guest
-        </span>{" "}
+        </button>{" "}
       </p>
     </div>
   );

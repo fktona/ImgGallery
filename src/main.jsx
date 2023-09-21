@@ -15,19 +15,19 @@ import {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/homepage",
     element: <App />,
-    errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: "/homepage",
         element: <HomePage />,
       },
     ],
   },
   {
-    path: "/login",
+    path: "/",
     element: <Login />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

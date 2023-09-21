@@ -30,7 +30,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="">
       <UserContext.Provider value={{ authUser, setAuthUser, aboutToSignOut }}>
         <RootLayot />
       </UserContext.Provider>

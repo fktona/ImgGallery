@@ -1,135 +1,61 @@
 import React, { useState, useEffect , useContext} from "react";
+import usePage from "../assets/usePage";
 import {
   DndContext,
   closestCenter,
   KeyboardSensor,
 } from "@dnd-kit/core";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
-import { MdFavorite } from "react-icons/md";
-import { searchResult } from "../assets/resource";
-import {CSS} from "@dnd-kit/utilities";
-import FetchedImg from "./FetchedImg";
+import SortableImage from "./Sorting"
 import { UserContext } from "../assets/UserContext";
-
-
-function SortableImage({ image, tags, id, likes, user }) {
-  const { authUser } = useContext(UserContext);
-
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-    over,
-  } = useSortable({ id });
-
-  const [isDraggingOver, setIsDraggingOver] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [showDragMessage, setShowDragMessage] = useState(false);
-
-  const handleDragMove = (event) => {
-    if (isDragging  ) {
-      const { clientX, clientY } = event;
-      setCursorPosition({ x: clientX, y: clientY });
-    }
-  };
-
-  useEffect(() => {
-    const dragMoveListener = (event) => {
-      handleDragMove(event);
-    };
-
-    document.addEventListener("mousemove", dragMoveListener);
-
-    return () => {
-      document.removeEventListener("mousemove", dragMoveListener);
-    };
-  }, [isDragging]);
-
-  const handleDragStart = () => {
-    if (authUser) {
-      alert("Please sign in to drag and drop.");
-      return;
-    }
-    setShowDragMessage(true);
-  };
-
-  const handleDragEnd = () => {
-    setShowDragMessage(false);
-    setIsDraggingOver(false);
-  };
-
-  const isOverlapping = over && over.id !== id && isDragging;
-
-  const style = {
-    transform: isDragging ? "scale(1.1)" : transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : "",
-    transition: transition || (isDragging ? "all 0.8s" : ""),
-    opacity: isOverlapping ? 0.9 : isDragging ? 0.7 : 1,
-    zIndex: isOverlapping ? -1 : 2,
-  };
-
-  return (
-    <div
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      style={style}
-      onMouseEnter={() => setIsDraggingOver(true)}
-      onMouseLeave={() => setIsDraggingOver(false)}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
-      {showDragMessage && (
-        <CustomPopup message="Drag me!" isVisible={true} />
-      )}
-      {isDraggingOver && isDragging && (
-        <div
-          style={{
-            position: "absolute",
-            zIndex: 1000,
-            transform: CSS.Transform.toString(transform),
-            pointerEvents: "none",
-            top: cursorPosition.y - 25,
-            left: cursorPosition.x - 25,
-          }}
-        >
-          <img
-            src={image}
-            alt={tags}
-            width={50}
-            height={50}
-            style={{
-              opacity: isOverlapping ? 0.5 : 0.7,
-            }}
-          />
-        </div>
-      )}
-      {/* Your existing image component */}
-      <FetchedImg image={image} tags={tags} id={id} likes={likes} user={user} />
-    </div>
-  );
-}
-
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import FetchedImg from "./FetchedImg";
 
 export default function Homepage() {
+  const { authUser } = useContext(UserContext);
   const [responseImage, setResponseImage] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [totalPages, setTotalPage] = useState("");
   const [toggle, setToggle] = useState();
   const [items, setItems] = useState([]);
+  const [loginMsg, setLoginMsg] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+const {
+  pages,
+  setPages,
+  setCurrentPage,
+  currentPage
+} = usePage(totalPages);
 
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const response = await searchResult({ q: searchTerm || "nature" });
-        setResponseImage(response.hits);
-      } catch (err) {
-        console.log(err);
+const apiKey = import.meta.env.VITE_API_KEY;
+const baseUrl = import.meta.env.VITE_BASE_URL;
+const perPage = 24
+
+useEffect(() => {
+  async function fetchData() {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`${baseUrl}?key=${apiKey}&q=${searchTerm || 'nature'}&page=${currentPage}&per_page=${perPage}`)
+      if (response.ok) {
+        const data = await response.json();
+        const { hits, totalHits } = data;
+        setResponseImage(hits);
+        setTotalPage(totalHits);
+        console.log(data); // Log the entire data object
+      } else {
+        console.error('Failed to fetch data from Pixabay API');
       }
+    } catch (err) {
+      console.error('An error occurred while fetching data:', err);
+    } finally {
+      setIsLoading(false);
     }
-    fetch();
-  }, [toggle]);
+  }
+
+  fetchData();
+}, [toggle, currentPage ,authUser]);
+
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
@@ -137,7 +63,9 @@ export default function Homepage() {
   };
 
   const handleDragEnd = ({ active, over }) => {
-    if (active?.id !== over.id) {
+    
+    if (authUser !== null){
+    if (active?.id !== over?.id) {
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
 
@@ -148,7 +76,14 @@ export default function Homepage() {
         return updatedItems;
       });
     }
-  };
+  }
+    else{
+      setLoginMsg(true)
+      setInterval(() => {
+        setLoginMsg(false)
+        }, [4000])
+    }
+  }
 
   useEffect(() => {
     setItems(
@@ -164,13 +99,13 @@ export default function Homepage() {
 
   return (
     <div className="relative top-12 p-2">
-      <h1 className="header-text text-3xl font-bold mt-[3rem] font-mono m-6 flex items-center justify-center">
+      <h1 className="header-text tracking-[5px] text-3xl font-bold mt-[3rem] font-mono m-6 flex items-center justify-center">
         EXPLORE THE BEAUTIFUL NATURE OF IMAGES
       </h1>
-      <div className="relative p-2 flex flex-col justify-center gap-5">
+      <div className="relative p-4 flex mb-6 flex-col justify-center gap-5">
         <input
           type="search"
-          className="text-primary max-w-[500px] mx-auto rounded-full w-full p-2 search"
+          className="text-primary text-md  max-w-[500px] mx-auto rounded-full w-full p-2 search"
           placeholder="search"
           value={searchTerm}
           onChange={handleChange}
@@ -182,9 +117,12 @@ export default function Homepage() {
           Search
         </button>
       </div>
+   {loginMsg && <p className= " poplogin text-white py-1 px-3 text-md mx-auto w-fit bg-secondary font-semibold m-8"> Login to drag and drop </p>  }
       <div className="flex relative items-start gap-2">
-        <DndContext onDragEnd={handleDragEnd}>
-          <ul className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 w-[90vw] mx-auto`}>
+        
+     {responseImage.length > 0 ?
+        <DndContext onDragEnd={ handleDragEnd}>
+          <ul className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 w-full items-center mx-auto`}>
             {items.map((item) => (
               <SortableImage
                 key={item.id}
@@ -193,11 +131,17 @@ export default function Homepage() {
                 tags={item.tags}
                 likes={item.likes}
                 user={item.user}
+                isLoading= {isLoading}
               />
             ))}
           </ul>
-        </DndContext>
-      </div>
+        </DndContext> :<p  className="text-white text-3xl mx-auto text-secondary">  No Results Found </p>}
+        </div>
+               <ul className="flex flex-wrap items-center justify-center gap-2">
+       { responseImage && pages?.map((o => <li key={o} onClick = { () => setCurrentPage(o)} 
+       className={`p-3 text-center
+     min-w-[50px] text-white shadow-secondary  shadow-sm ${currentPage === o ?'border-2 border-action shadow-none  rounded-b-md':null}`}>{o}</li> ))}
+      </ul>
     </div>
   );
 }

@@ -9,12 +9,12 @@ export default function Nav() {
   const [confirm, setConfirm] = useState(false);
 
   const signing = () => {
-    authUser ? setConfirm(true) : Navigate("/login");
+    authUser ? setConfirm(true) : Navigate("/");
   };
 
   return (
     <div
-      className={` bg-white flex z-[5] fixed top-0 w-full justify-between py-2 px-4 items-center shadow-lg `}
+      className={` bg-black shadow-secondary flex z-[5] fixed top-0 w-full justify-between py-2 px-4 items-center shadow-sm `}
     >
       {confirm && authUser && (
         <div className="bg-white absolute top-10 z-[3] shadow-lg right-5 p-3 text-primary flex flex-col gap-2 items-center justify-center text-md ">
@@ -39,7 +39,7 @@ export default function Nav() {
         ViewVault
       </h1>
       {authUser && (
-        <h4 className="text-primary font-mono text-sm font-semibold">
+        <h4 className=" header-text font-mono text-sm font-semibold">
           {" "}
           {"Hi, " + auth.currentUser?.email}
         </h4>

@@ -8,8 +8,7 @@
   margin: 0;
 }
 
-
-:root{
+:root {
   --linear: linear-gradient(
     to right bottom,
     #392724,
@@ -19,8 +18,9 @@
     #f6d2bc
   );
 }
-
-
+html {
+  background: black;
+}
 .login {
   background: rgba(255, 255, 255, 0.18);
   border-radius: 16px;
@@ -119,10 +119,7 @@ input {
   background-clip: text;
   color: transparent; /* Make the text transparent to reveal the gradient background */
   letter-spacing: 4px;
-  
 }
-
-
 
 .header-text {
   background-image: var(--linear);
@@ -134,22 +131,36 @@ input {
 
   background-clip: text;
   color: transparent; /* Make the text transparent to reveal the gradient background */
-  letter-spacing: 4px;
+  letter-spacig: 4px;
   transition: all 400ms linear;
-  
-
-  animation: bg 400ms linear;
 }
 
-.header-text:hover{
-  color: #392724;
+.header-text:hover {
+  background-image: linear-gradient(
+    to left top,
+    #392724,
+    #644d47,
+    #93766c,
+    #c4a393,
+    #f6d2bc
+  );
+
+  -webkit-background-clip: text;
+
+  /* text-shadow: 1px 1px 1px #392724, 2px 2px 2px #644d47, 3px 3px 3px #93766c,
+    1px 1px 1px #c4a393, 2px 2px 2px #f6d2bc; */
+
+  background-clip: text;
+  color: transparent; /* Make the text transparent to reveal the gradient background */
+  letter-spacing: 4px;
+  transition: all 400ms linear;
 }
 
 .search {
   border-radius: 0px;
-background: #ffffff;
-box-shadow: inset 5px 5px 10px #d9d9d9,
-            inset -5px -5px 10px #ffffff;
+  background: #ffff;
+  box-shadow: inset 3px 3px 5px #d9d3d4, inset -5px -5px 10px #ffffff;
+  border: 1px solid #f6d2bc;
 }
 
 /* CSS */
@@ -158,20 +169,36 @@ box-shadow: inset 5px 5px 10px #d9d9d9,
   transition: transform 0.3s ease; /* Add a smooth transition effect */
 }
 
-
-
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); /* Define your grid columns */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(230px, 1fr)
+  ); /* Define your grid columns */
   grid-auto-rows: auto; /* Specify the height of auto-generated rows */
   grid-auto-flow: dense; /* Use dense to make items flow to the next row when width is full */
   place-items: center;
-  justify-content:  center;
-
+  justify-content: center;
 }
 
 .grid-item {
   /* Define styling for grid items */
   border: 1px solid #ccc;
   padding: 10px;
+}
+
+.poplogin {
+  animation: opac 4s linear alternate infinite;
+}
+
+@keyframes opac {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(0.3);
+  }
 }
