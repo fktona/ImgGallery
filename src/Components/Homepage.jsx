@@ -9,16 +9,20 @@ import { MdFavorite } from "react-icons/md";
 import { searchResult } from "../assets/resource";
 import {CSS} from "@dnd-kit/utilities";
 import FetchedImg from "./FetchedImg";
-import CustomPopup from "./popup"; // Import the custom popup component
 
 function SortableImage({ image, tags, id, likes, user }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+    over,
+  } = useSortable({ id });
+
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [showDragMessage, setShowDragMessage] = useState(false);
-  const [showDropMessage, setShowDropMessage] = useState(false);
-
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging, over } =
-    useSortable({ id });
 
   const handleDragMove = (event) => {
     if (isDragging) {
@@ -39,66 +43,53 @@ function SortableImage({ image, tags, id, likes, user }) {
     };
   }, [isDragging]);
 
-  const handleDragStart = () => {
-    setShowDragMessage(true);
-  };
+  const isOverlapping = over?.id !== id && isDragging;
 
-  const handleDragEnd = () => {
-    setShowDragMessage(false);
-    setShowDropMessage(false);
+  const style = {
+    transform: isDragging ? "scale(1.1)" : transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : "",
+    transition: transition || (isDragging ? "all 0.8s" : ""),
+    opacity: isOverlapping ? 0.9 : isDragging ? 0.7 : 1,
+    zIndex: isOverlapping ? -1 : 2,
   };
-
-  const isOverlapping = over && over.id !== id;
 
   return (
     <div
       ref={setNodeRef}
       {...attributes}
       {...listeners}
-      style={{
-        transform: isDragging
-          ? "scale(1.1)"
-          : transform
-          ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-          : "",
-        transition: transition || (isDragging ? "transform 0.2s" : ""),
-        opacity: isDraggingOver ? 0.5 : isDragging ? 0.7 : 1,
-        zIndex: isDraggingOver ? -1 : 1,
-      }}
+      style={style}
       onMouseEnter={() => setIsDraggingOver(true)}
       onMouseLeave={() => setIsDraggingOver(false)}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
     >
-      <CustomPopup message="Drag me!" isVisible={showDragMessage} />
       {isDraggingOver && isDragging && (
-        <div
+        <div 
           style={{
-            position: "fixed",
-            zIndex: 1000,
+            position: "absolute",
+            zIndex: 1000, // Increase the z-index here
+            transform: CSS.Transform.toString(transform),
             pointerEvents: "none",
-            top: cursorPosition.y - 25,
-            left: cursorPosition.x - 25,
+            top: cursorPosition.y - 25, // Adjust the values to center the clone
+            left: cursorPosition.x - 25, // Adjust the values to center the clone
           }}
         >
           <img
-            src={over.image}
-            alt={over.tags}
+            src={image}
+            alt={tags}
             width={50}
             height={50}
             style={{
-              transform: "scale(0.7)",
-              opacity: 0.5,
+             // transform: isOverlapping ? "scale(0.7)" : "scale(1.1)",
+              opacity: isOverlapping ? 0.5 : 0.7,
             }}
           />
         </div>
       )}
-      <CustomPopup message="Drop me here!" isVisible={showDropMessage} />
-              
+      {/* Your existing image component */}
       <FetchedImg image={image} tags={tags} id={id} likes={likes} user={user} />
     </div>
   );
 }
+
 
 
 export default function Homepage() {
