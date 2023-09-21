@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext} from "react";
 import {
   DndContext,
   closestCenter,
@@ -9,8 +9,12 @@ import { MdFavorite } from "react-icons/md";
 import { searchResult } from "../assets/resource";
 import {CSS} from "@dnd-kit/utilities";
 import FetchedImg from "./FetchedImg";
+import { UserContext } from "../assets/UserContext";
+
 
 function SortableImage({ image, tags, id, likes, user }) {
+  const { authUser } = useContext(UserContext);
+
   const {
     attributes,
     listeners,
@@ -23,9 +27,10 @@ function SortableImage({ image, tags, id, likes, user }) {
 
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [showDragMessage, setShowDragMessage] = useState(false);
 
   const handleDragMove = (event) => {
-    if (isDragging) {
+    if (isDragging  ) {
       const { clientX, clientY } = event;
       setCursorPosition({ x: clientX, y: clientY });
     }
@@ -43,7 +48,20 @@ function SortableImage({ image, tags, id, likes, user }) {
     };
   }, [isDragging]);
 
-  const isOverlapping = over?.id !== id && isDragging;
+  const handleDragStart = () => {
+    if (authUser) {
+      alert("Please sign in to drag and drop.");
+      return;
+    }
+    setShowDragMessage(true);
+  };
+
+  const handleDragEnd = () => {
+    setShowDragMessage(false);
+    setIsDraggingOver(false);
+  };
+
+  const isOverlapping = over && over.id !== id && isDragging;
 
   const style = {
     transform: isDragging ? "scale(1.1)" : transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : "",
@@ -60,16 +78,21 @@ function SortableImage({ image, tags, id, likes, user }) {
       style={style}
       onMouseEnter={() => setIsDraggingOver(true)}
       onMouseLeave={() => setIsDraggingOver(false)}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
     >
+      {showDragMessage && (
+        <CustomPopup message="Drag me!" isVisible={true} />
+      )}
       {isDraggingOver && isDragging && (
-        <div 
+        <div
           style={{
             position: "absolute",
-            zIndex: 1000, // Increase the z-index here
+            zIndex: 1000,
             transform: CSS.Transform.toString(transform),
             pointerEvents: "none",
-            top: cursorPosition.y - 25, // Adjust the values to center the clone
-            left: cursorPosition.x - 25, // Adjust the values to center the clone
+            top: cursorPosition.y - 25,
+            left: cursorPosition.x - 25,
           }}
         >
           <img
@@ -78,7 +101,6 @@ function SortableImage({ image, tags, id, likes, user }) {
             width={50}
             height={50}
             style={{
-             // transform: isOverlapping ? "scale(0.7)" : "scale(1.1)",
               opacity: isOverlapping ? 0.5 : 0.7,
             }}
           />
@@ -89,7 +111,6 @@ function SortableImage({ image, tags, id, likes, user }) {
     </div>
   );
 }
-
 
 
 export default function Homepage() {
@@ -132,11 +153,11 @@ export default function Homepage() {
   useEffect(() => {
     setItems(
       responseImage.map((o) => ({
-        id: o.id,
-        image: o.webformatURL,
-        tags: o.tags,
-        likes: o.likes,
-        user: o.user,
+        id: o?.id,
+        image: o?.webformatURL,
+        tags: o?.tags,
+        likes: o?.likes,
+        user: o?.user,
       }))
     );
   }, [responseImage]);
