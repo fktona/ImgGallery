@@ -138,7 +138,7 @@ useEffect(() => {
         </DndContext> 
                 </div>
         
-        {responseImage.length > 0 && <p  className="text-white text-3xl mx-auto text-secondary">  No Results Found </p>}
+        {responseImage.length < 1 && searchTerm && <p  className="text-white text-3xl mx-auto text-secondary">  No Results Found </p>}
  
         
                <ul className="flex flex-wrap items-center justify-center gap-2">
