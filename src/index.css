@@ -118,7 +118,7 @@ input {
 
   background-clip: text;
   color: transparent; /* Make the text transparent to reveal the gradient background */
-  letter-spacing: 4px;
+  
 }
 
 .header-text {
