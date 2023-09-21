@@ -20,6 +20,7 @@ export default function Homepage() {
   const [toggle, setToggle] = useState();
   const [items, setItems] = useState([]);
   const [loginMsg, setLoginMsg] = useState(false);
+  const [startMsg, setStartMsg] = useState(false);
   const [dragMsg, setDragMsg] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 const {
@@ -91,7 +92,23 @@ useEffect(() => {
         }, [4000])
     }
   }
-
+    const handleDragStart = () => {
+      if (authUser !== null){
+  
+    setStartMsg(true)
+      setTimeout(() => {
+        setStartMsg(false)
+        }, [1000])
+    
+  
+      } else {
+        setLoginMsg(true)
+      setStartMsg(false)
+      setTimeout(() => {
+        setLoginMsg(false)
+        }, [4000])
+      }
+};
   useEffect(() => {
     setItems(
       responseImage.map((o) => ({
@@ -128,11 +145,14 @@ useEffect(() => {
    
       {dragMsg && <p className= " poplogin fixed inset-x-0 z-[20] text-white py-1 px-3 md:text-lg  text-md mx-auto w-fit bg-primary font-semibold m-8"> You Moved An Image </p>  }
       
+            {startMsg&& <p className= " poplogin fixed inset-x-0 z-[20] text-white py-1 px-3 md:text-lg  text-md mx-auto w-fit bg-primary font-semibold m-8"> You Are About To Move An Image</p>  }
+      
       
       <div className="flex relative items-start gap-2">
         
      
-        <DndContext onDragEnd={ handleDragEnd}>
+        <DndContext onDragEnd={ handleDragEnd} 
+        onDragStart= {handleDragStart}>
           <ul className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 w-full items-center mx-auto`}>
             {items.map((item) => (
               <SortableImage
