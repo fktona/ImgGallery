@@ -90,7 +90,7 @@ export default function SortableImage({ image, tags, id, likes, user ,isLoading 
             position: "absolute",
             zIndex: 10000,
            transform: CSS.Transform.toString(transform),
-           transition:transition,
+           transition: "all 0.4s linear"
             pointerEvents: "none",
             top: cursorPosition.y - 25,
             left: cursorPosition.x - 25,
