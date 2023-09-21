@@ -23,7 +23,7 @@ function App() {
   const aboutToSignOut = () => {
     signOut(auth)
       .then(() => {
-        setAuthUser(false);
+        setAuthUser(null);
         console.log("signOut");
       })
       .catch((error) => {});

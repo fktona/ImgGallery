@@ -55,7 +55,7 @@ useEffect(() => {
   }
 
   fetchData();
-}, [toggle, currentPage ,authUser]);
+}, [toggle, currentPage ]);
 
 
   const handleChange = (event) => {
