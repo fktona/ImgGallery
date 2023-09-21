@@ -102,7 +102,7 @@ transform: CSS.Transform.toString(transform),
             height={300}
             style={{
               opacity: isOverlapping ? 1 : 1,
-              position: 'relative',
+              position: 'aboslute',
               zIndex:1000000000,
             }}
           />
