@@ -20,6 +20,7 @@ export default function Homepage() {
   const [toggle, setToggle] = useState();
   const [items, setItems] = useState([]);
   const [loginMsg, setLoginMsg] = useState(false);
+  const [dragMsg, setDragMsg] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 const {
   pages,
@@ -66,6 +67,11 @@ useEffect(() => {
     
     if (authUser !== null){
     if (active?.id !== over?.id) {
+      setDragMsg(true)
+      setTimeout(() => {
+        setDragMsg(false)
+        }, [4000])
+    
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
 
@@ -79,7 +85,7 @@ useEffect(() => {
   }
     else{
       setLoginMsg(true)
-      setInterval(() => {
+      setTimeout(() => {
         setLoginMsg(false)
         }, [4000])
     }
@@ -117,7 +123,11 @@ useEffect(() => {
           Search
         </button>
       </div>
-   {loginMsg && <p className= " poplogin text-white py-1 px-3 text-md mx-auto w-fit bg-secondary font-semibold m-8"> Login to drag and drop </p>  }
+   {loginMsg &&  <p className= " poplogin fixed inset-x-0 z-[20] text-white py-1 px-3 md:text-lg  text-md mx-auto w-fit bg-primary font-semibold m-8"> You Moved An Image </p>  }
+   
+      {dragMsg && <p className= " poplogin fixed inset-x-0 z-[20] text-white py-1 px-3 md:text-lg  text-md mx-auto w-fit bg-primary font-semibold m-8"> You Moved An Image </p>  }
+      
+      
       <div className="flex relative items-start gap-2">
         
      
@@ -138,7 +148,7 @@ useEffect(() => {
         </DndContext> 
                 </div>
         
-        {responseImage.length < 1 && searchTerm && <p  className="text-white text-3xl mx-auto text-secondary">  No Results Found </p>}
+        {responseImage.length < 1 && searchTerm && <p  className="text-white text-3xl w-full flex justify-center text-secondary">  No Results Found </p>}
  
         
                <ul className="flex flex-wrap items-center justify-center gap-2">

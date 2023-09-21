@@ -28,7 +28,8 @@ export default function SortableImage({ image, tags, id, likes, user ,isLoading 
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [showDragMessage, setShowDragMessage] = useState(false);
-
+    const [isReducedWidth, setIsReducedWidth] = useState(false);
+    
   const handleDragMove = (event) => {
     if (isDragging  ) {
       const { clientX, clientY } = event;
@@ -49,9 +50,9 @@ export default function SortableImage({ image, tags, id, likes, user ,isLoading 
   }, [isDragging]);
 
   const handleDragStart = () => {
+  setIsReducedWidth(true);
+};
 
-    setShowDragMessage(true);
-  };
 
   const handleDragEnd = () => {
    
@@ -62,11 +63,13 @@ export default function SortableImage({ image, tags, id, likes, user ,isLoading 
   const isOverlapping = over && over.id !== id && isDragging;
 
   const style = {
-    transform: isDragging ? "scale(1.1)" : transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : "",
-    transition: transition || (isDragging ? "all 0.8s" : ""),
-    opacity: isOverlapping ? 0.9 : isDragging ? 0.7 : 1,
-    zIndex: isOverlapping ? -1 : 2,
-  };
+  transform: isDragging ? "scale(1.1)" : transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : "",
+  transition: transition || (isDragging ? "all 0.8s" : ""),
+  opacity: isOverlapping ? 0.9 : isDragging ? 0.7 : 1,
+  width: isReducedWidth ? "50px" : "", // Adjust the width as needed
+  zIndex: isOverlapping ? -1 : 2,
+};
+
 
   return (
     <div
