@@ -44,12 +44,10 @@ useEffect(() => {
         const { hits, totalHits } = data;
         setResponseImage(hits);
         setTotalPage(totalHits);
-        console.log(data); // Log the entire data object
       } else {
-        console.error('Failed to fetch data from Pixabay API');
       }
     } catch (err) {
-      console.error('An error occurred while fetching data:', err);
+    
     } finally {
       setIsLoading(false);
     }

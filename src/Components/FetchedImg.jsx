@@ -4,7 +4,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function FetchedImg({ image, tags, id, likes, user , isLoading ,img }) {
-  // You can define when to show the skeleton based on whether the image is available or not.
+ 
 
   return (
     <div className={`cursor-pointer  flex flex-col relative`}>

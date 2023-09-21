@@ -18,13 +18,12 @@ function App() {
     };
   }, []);
 
-  console.log(authUser);
 
   const aboutToSignOut = () => {
     signOut(auth)
       .then(() => {
         setAuthUser(null);
-        console.log("signOut");
+       
       })
       .catch((error) => {});
   };

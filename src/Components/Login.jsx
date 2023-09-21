@@ -50,20 +50,17 @@ function Login() {
     );
 
     setEmptyField(false);
-    console.log(userCredential.user);
-
-    // Only navigate to the home page on successful sign-in
     Navigate('/homepage');
   } catch (error) {
     if (error.code === "auth/wrong-password") {
-      console.log("Incorrect password");
+      
       setIncorrectPassword(true);
     } else if (error.code === "auth/user-not-found") {
-      console.log("User not found");
+    
       setIncorrectEmail(true);
-      // Handle user not found condition here, e.g., show error message to the user
+     
     } else {
-      console.error("Error signing in:", error);
+     
       setSignInError(true);
     }
   } finally {
