@@ -10,7 +10,7 @@ import {
   
   
 } from "@dnd-kit/core";
-import { SortableContext, useSortable , verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { SortableContext, useSortable , verticalListSortingStrategy ,rectSwappingStrategy } from "@dnd-kit/sortable";
 import SortableImage from "./Sorting"
 import { UserContext } from "../assets/UserContext";
 import Skeleton from 'react-loading-skeleton'
@@ -166,8 +166,9 @@ const customSensors = [
         
      
         <DndContext onDragEnd={ handleDragEnd} 
-        onDragStart={handleDragStart} collisionDectection={closestCenter} verticalListSortingStrategy={verticalListSortingStrategy}
+        onDragStart={handleDragStart} collisionDectection={closestCenter} 
         sensors={customSensors}>
+          <SortableContext items={items} strategy ={rectSwappingStrategy}> 
           <ul className={`grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-3 p-2 md:p-4 w-full items-center mx-auto`}>
             {items.map((item) => (
               <SortableImage
@@ -180,7 +181,8 @@ const customSensors = [
                 isLoading= {isLoading}
               />
             ))}
-          </ul>
+              </ul>
+          </SortableContext>
         </DndContext> 
                 </div>
         
