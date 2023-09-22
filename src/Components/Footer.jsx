@@ -8,7 +8,7 @@ import {
 
 export default function Footer() {
   return (
-    <div className="flex text-white flex-col font-lato relative mt-5 bottom-[-3.5rem] w-full justify-center items-center mt-5 gap-3 p-2">
+    <div className="flex text-secondary flex-col font-lato relative mt-5 bottom-[-3.5rem] w-full justify-center items-center mt-5 gap-3 p-2">
       <div className="flex w-full gap-4 p-2 items-center justify-center ">
         <AiFillFacebook />
         <AiFillTwitterSquare />
@@ -20,7 +20,7 @@ export default function Footer() {
         <p>Privacy & Policy</p>
         <p>Press Room</p>
       </div>
-      <p className="flex w-full font-danc gap-4 p-2 items-center justify-center ">
+      <p className="flex w-full  font-danc gap-4 p-2 items-center justify-center ">
         © 2023 Veiw Vault by Faith Adetona
       </p>
     </div>
