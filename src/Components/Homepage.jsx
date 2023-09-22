@@ -4,6 +4,10 @@ import {
   DndContext,
   closestCenter,
   KeyboardSensor,
+  useSensor,
+  MouseSensor,
+  TouchSensor,
+  
 } from "@dnd-kit/core";
 import { SortableContext, useSortable , verticalListSortingStrategy } from "@dnd-kit/sortable";
 import SortableImage from "./Sorting"
@@ -118,6 +122,7 @@ useEffect(() => {
       }))
     );
   }, [responseImage]);
+const customSensors = [useSensor(TouchSensor), useSensor(MouseSensor)];
 
   return (
     <div className="relative top-12 p-2">
@@ -150,8 +155,9 @@ useEffect(() => {
         
      
         <DndContext onDragEnd={ handleDragEnd} 
-        onDragStart={handleDragStart} collisionDectection={closestCenter} verticalListSortingStrategy={verticalListSortingStrategy}>
-          <ul className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 w-full items-center mx-auto`}>
+        onDragStart={handleDragStart} collisionDectection={closestCenter} verticalListSortingStrategy={verticalListSortingStrategy}
+        sensors={customSensors}>
+          <ul className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:p-8 gap-6 p-6 w-full items-center mx-auto`}>
             {items.map((item) => (
               <SortableImage
                 key={item.id}
