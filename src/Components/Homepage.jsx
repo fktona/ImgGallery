@@ -92,7 +92,7 @@ useEffect(() => {
       setDragMsg(false)
       setTimeout(() => {
         setLoginMsg(false)
-        }, [4000])
+        }, [2500])
     }
   }
     const handleDragStart = () => {
@@ -101,7 +101,7 @@ useEffect(() => {
     setStartMsg(true)
       setTimeout(() => {
         setStartMsg(false)
-        }, [1000])
+        }, [2500])
     
   
       } else {
@@ -109,7 +109,7 @@ useEffect(() => {
       setStartMsg(false)
       setTimeout(() => {
         setLoginMsg(false)
-        }, [4000])
+        }, [2500])
       }
 };
   useEffect(() => {

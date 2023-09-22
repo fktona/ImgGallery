@@ -188,7 +188,7 @@ input {
 }
 
 .poplogin {
-  animation: opac 4s linear alternate infinite;
+  animation: opac 2.5s linear alternate infinite;
 }
 
 @keyframes opac {
@@ -198,7 +198,7 @@ input {
   }
 
   100% {
-    opacity: 1;
+    opacity: 0;
     transform: scale(0.3);
   }
 }
