@@ -15,8 +15,8 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [userSignIn, setUserSignIn] = useState({
-    email: "",
-    password: "",
+    email: "user@example.com",
+    password: "1Password",
   });
 
   const handleInputChange = (event) => {
